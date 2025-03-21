@@ -1,5 +1,10 @@
+
+##Victoria Lutz
+
 import pytest 
 from pytest import approx
+
+
 ##this is to get the function from water_flow.py
 from water_flow import water_column_height
 
@@ -36,3 +41,27 @@ def test_pressure_loss_from_fittings():
     pressure_loss_from_fittings(1.65, 2) == approx (-0.109, abs=0.001)
     pressure_loss_from_fittings(1.75, 2) == approx (-0.122, abs=0.001)
     pressure_loss_from_fittings(1.75, 5) == approx (-0.306, abs=0.001)
+    
+from water_flow import reynolds_number
+
+def test_reynolds_number():
+    assert reynolds_number(0.048692, 0.00) == approx (0, abs=1)
+    assert reynolds_number(0.048692, 1.65) == approx (80069, abs=1)
+    assert reynolds_number(0.048692, 1.75) == approx (84922, abs=1)
+    assert reynolds_number(0.286870, 1.65) == approx (471729, abs= 1)
+    assert reynolds_number(0.286870, 1.75) == approx(500318, abs= 1)
+    
+from water_flow import pressure_loss_from_pipe_reduction
+
+def test_pressure_loss_from_pipe_reduction():
+    assert pressure_loss_from_pipe_reduction(0.28687, 0, 1, 0.048692) == approx (0.00, abs=0.001)
+    assert pressure_loss_from_pipe_reduction(0.28687, 1.65, 471729, 0.048692) == approx (-163.744, abs=0.001)
+    assert pressure_loss_from_pipe_reduction(0.28687, 1.75, 500318, 0.048692) == approx (-184.182, abs=0.001)
+    
+    
+from water_flow import kpa_to_psi 
+
+##EXTRA CREDIT TEST IS RIGHT HERE 
+def test_kpa_psi():
+    assert kpa_to_psi(12.35) == approx(1.791, abs=.001)
+    assert kpa_to_psi(2) == approx(0.29, abs=.001)
